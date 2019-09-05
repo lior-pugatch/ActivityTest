@@ -21,6 +21,21 @@
             android:padding="20dip"
             android:background="#b0b0b0"
             android:textColor="#000"/>
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="fill_parent"
+            android:src="@drawable/ic_done"
+            android:adjustViewBounds="true"
+            android:background="#b0b0b0"
+            />
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="fill_parent"
+            android:src="@drawable/ic_add"
+            android:adjustViewBounds="true"
+            android:background="#b0b0b0"
+            />
+
     </TableRow>
     <TableRow
         android:id="@+id/tableRow1"
