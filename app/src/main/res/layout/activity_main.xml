@@ -128,18 +128,6 @@
                 android:textOn="Water Off"
                 android:layout_weight="1"/>
             <Button
-
-                android:text="New Timer"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:layout_gravity="center"
-                android:id="@+id/btnNewActivity"
-                android:layout_weight="1"
-                android:onClick="OnClick_btnNewActivity"/>
-        </TableRow>
-        <TableRow>
-            <Button
                 android:text="View Timers"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
@@ -149,16 +137,9 @@
                 android:id="@+id/btnViewTimers"
                 android:layout_weight="1"
                 android:onClick="OnClick_btnViewTimers"/>
-            <Button
-                android:text="Send Timers"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:textSize="14dp"
-                android:layout_gravity="center"
-                android:id="@+id/btnSendTimers"
-                android:layout_weight="1"
-                android:onClick="OnClick_btnSendTimers"/>
+        </TableRow>
+        <TableRow>
+
         </TableRow>
     </TableLayout>
 </LinearLayout>

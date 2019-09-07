@@ -1,70 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/timersTable"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
-    android:shrinkColumns="*"
-    android:stretchColumns="*"
     android:background="#ffffff"
-    android:id="@+id/timersTable">
+    android:stretchColumns="*">
 
     <!-- Row 1 with single column -->
     <TableRow
-        android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:gravity="center_horizontal">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:id="@+id/headerRow">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text="Timer Table"
             android:layout_span="4"
+            android:background="#b0b0b0"
             android:padding="20dip"
-            android:background="#b0b0b0"
-            android:textColor="#000"/>
+            android:text="Timer Table"
+            android:textColor="#000"
+            android:textSize="18dp" />
+
         <ImageView
+            android:id="@+id/btnTimerDone"
             android:layout_width="18dp"
             android:layout_height="fill_parent"
-            android:src="@drawable/ic_done"
             android:adjustViewBounds="true"
             android:background="#b0b0b0"
-            />
+            android:onClick="OnClick_btnTimerDone"
+            android:src="@drawable/ic_done" />
+
         <ImageView
+            android:id="@+id/btnTimerAdd"
             android:layout_width="18dp"
             android:layout_height="fill_parent"
-            android:src="@drawable/ic_add"
             android:adjustViewBounds="true"
             android:background="#b0b0b0"
-            />
+            android:onClick="OnClick_btnTimerAdd"
+            android:src="@drawable/ic_add" />
 
     </TableRow>
+
     <TableRow
         android:id="@+id/tableRow1"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:paddingTop="10dp"
+        android:layout_height="wrap_content"
+        android:background="#8adec7"
+        android:baselineAligned="true"
         android:paddingBottom="10dp"
-        android:baselineAligned="true" android:background="#8adec7">
+        android:paddingTop="10dp">
+
         <TextView
-            android:id="@+id/TextView10" android:text="Tap id"
+            android:id="@+id/TextView10"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:padding="2dip" android:gravity="center"/>
+            android:gravity="center"
+            android:padding="2dip"
+            android:text="Tap id"
+            android:textColor="#000000" />
+
         <TextView
-            android:id="@+id/TextView11" android:text="Day"
+            android:id="@+id/TextView11"
+
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:padding="2dip" android:gravity="center"
-            android:layout_width="4dp"/>
+            android:gravity="center"
+            android:padding="2dip"
+            android:text="Day"
+            android:textColor="#000000" />
+
         <TextView
-            android:id="@+id/TextView12" android:text="Time"
+            android:id="@+id/TextView12"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:padding="2dip" android:gravity="center"/>
+            android:gravity="center"
+            android:padding="2dip"
+            android:text="Time"
+            android:textColor="#000000" />
+
         <TextView
-            android:id="@+id/TextView13" android:text="Duration"
+            android:id="@+id/TextView13"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:padding="2dip" android:gravity="center"/>
+            android:gravity="center"
+            android:padding="2dip"
+            android:text="Duration"
+            android:textColor="#000000" />
 
     </TableRow>
 

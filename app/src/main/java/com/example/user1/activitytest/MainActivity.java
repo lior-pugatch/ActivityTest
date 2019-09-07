@@ -225,15 +225,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void OnClick_btnNewActivity(View view) {
-        Intent intent = new Intent(this, AlarmActivity.class);
-        startActivityForResult(intent, Constants.INTENT_REQUEST_NEW);
-    }
-
     public void OnClick_btnViewTimers(View view){
         Intent intent = new Intent(this, ShowTimersActivity.class);
         intent.putExtra("TimersList", timerList);
-        startActivityForResult(intent, Constants.INTENT_REQUEST_SELECT_FROM_TABLE);
+        startActivityForResult(intent, Constants.INTENT_REQUEST_UPDATE_CONTROLLER_TIMERS);
     }
 
     private void connect() {
@@ -295,11 +290,11 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    public void OnClick_btnSendTimers(View view){
+    private void sendTimers(ArrayList<Timer> _timerList){
         Log.d(TAG,"in send timers00");
         byte[] data = new byte[1024];
         Log.d(TAG,"in send timers0");
-        int nTimers = timerList.size();
+        int nTimers = _timerList.size();
         Log.d(TAG,"in send timers1");
         data[0] = (byte)0xA1;
         Log.d(TAG,"in send timers2");
@@ -310,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < nTimers; i++)
         {
-            timer = timerList.get(i);
+            timer = _timerList.get(i);
             data[5*i + 2] = (byte)timer.getControllerId();
             data[5*i + 3] = (byte)timer.getDay();
             data[5*i + 4] = (byte)timer.getHour();
@@ -323,6 +318,8 @@ public class MainActivity extends AppCompatActivity {
             DatagramPacket sendSchedulePacket = new DatagramPacket(data, 0, nTimers*5 + 2,
                     InetAddress.getByName(controllerIPeditText.getText().toString()), CONTROLLER_UDP_PORT);
             outgoingUdpSocket.send(sendSchedulePacket);
+
+            Toast.makeText(MainActivity.this, "Timers sent successfully...", Toast.LENGTH_LONG).show();
         } catch (UnknownHostException e) {
             Toast.makeText(MainActivity.this, "Bad IP address", Toast.LENGTH_LONG).show();
             e.printStackTrace();
@@ -342,36 +339,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Log.d(TAG, "Main: Got result - reqCode: "+ requestCode + " resCode: " + resultCode );
+        if (requestCode == Constants.INTENT_REQUEST_UPDATE_CONTROLLER_TIMERS && resultCode == Constants.RETURN_VALUE_UPDATE_NEEDED)
+        {
+            ArrayList<Timer> UpdatedTimerList = data.getParcelableArrayListExtra("TimersList");
+            sendTimers(UpdatedTimerList);
+            Log.d(TAG, "Returned after to main with updated timer list");
 
-        if(requestCode == Constants.INTENT_REQUEST_NEW && resultCode == Activity.RESULT_OK){
-            Timer timer = (Timer) data.getParcelableExtra("timer");
-            timerList.add(timer);
-            Log.d(TAG,"Added timer to array, day: " + timer.getDayString() + ", Time: "
-                    + timer.getHour() + ":" + timer.getMinute() + ", ctrl id: " + timer.getControllerId()
-             + ", duration: " + timer.getDuration());
-            //Do whatever you want with yourData
-        }
-        else if (requestCode == Constants.INTENT_REQUEST_SELECT_FROM_TABLE && resultCode == Activity.RESULT_OK)
-        {
-            timerIdxToEdit = data.getIntExtra("TimerIdx", 0);
-            Log.d(TAG, "Returned after long click from table, user requested to edit timer "+ timerIdxToEdit);
-            Intent intent = new Intent(this, AlarmActivity.class);
-            intent.putExtra("timer", timerList.get(timerIdxToEdit));
-            startActivityForResult(intent, Constants.INTENT_REQUEST_EDIT);
-        }
-        else if (requestCode == Constants.INTENT_REQUEST_EDIT && resultCode == Constants.RETURN_VALUE_UPDATE)
-        {
-            Timer timer = (Timer) data.getParcelableExtra("timer");
-            Log.d(TAG,"Got timer After Edit, day: " + timer.getDayString() + ", Time: "
-                    + timer.getHour() + ":" + timer.getMinute() + ", ctrl id: " + timer.getControllerId()
-                    + ", duration: " + timer.getDuration());
-
-            timerList.set(timerIdxToEdit, timer);
-        }
-        else if (requestCode == Constants.INTENT_REQUEST_EDIT && resultCode == Constants.RETURN_VALUE_DELETE)
-        {
-            Log.d(TAG,"Deleting timer" + timerIdxToEdit);
-            timerList.remove(timerIdxToEdit);
         }
     }
 }
